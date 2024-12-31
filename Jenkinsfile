@@ -14,12 +14,21 @@ pipeline {
             }
         }
         stage('Install Dependencies') {
-            steps {
-                bat '''
-                set PATH=%NODEJS_HOME%;%PATH%
-                npm install
-                '''
+                    steps {
+                script {
+                    // Navigate to the 'backend' directory
+                    dir('backend') {
+                        // Run npm install in the backend directory
+                        bat 'npm install'
+                    }
+                }
             }
+            // steps {
+            //     bat '''
+            //     set PATH=%NODEJS_HOME%;%PATH%
+            //     npm install
+            //     '''
+            // }
         }
         stage('SonarQube Analysis') {
             environment {
